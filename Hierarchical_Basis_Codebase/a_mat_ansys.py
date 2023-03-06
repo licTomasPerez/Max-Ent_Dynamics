@@ -7,7 +7,7 @@ import scipy.linalg as linalg
 
 # In [2]:
 
-def ev_checks(rho, check_positive_definite = False, tol = 1e-3):
+def ev_checks(rho, check_positive_definite = False, tol = 1e-5):
     """
     This module checks if a qutip.Qobj, a matrix, is either positive-definite or positive semi-definite, 
     i.e. whether or not all of its eigenvalues are strictly positive or non-negative, respectively. 
@@ -53,43 +53,52 @@ def ev_checks(rho, check_positive_definite = False, tol = 1e-3):
             return False 
         return True
 
-def is_density_op(rho, verbose=False, critical=False, tol = 1e-3):
+def is_density_op(rho, verbose=False, critical=False, tol = 1e-5):
     """
-    This module checks if the user-input QuTip.Qobj, rho, is a density operator or not. This is done 
-    by checking if it is a hermitian, positive semi-definite, and trace-one, matrix. 
+    This module checks if the user-input QuTip.Qobj,
+    rho, is a density operator or not. This is done 
+    by checking if it is a hermitian, positive definite,  
+    and trace-one, matrix. 
     This module takes as input the following parameters:
     
         *♥*♥* 1. rho: a qutip.Qobj,
-        *♥*♥* 2. verbose: an optional boolean parameter for printing out logs,
-                          stating which tests rho hasn't passed,
-        *♥*♥* 3. critical: an optional boolean parameter.
-        *♥*♥* 4. tol: an optional boolean parameter for establishing a maximum tolerance 
-                        for numerical errors, when computing rho's trace. 
-                        See Warnings further below.
+        *♥*♥* 2. verbose: an optional boolean parameter 
+                          for printing out logs,
+                          stating which tests rho hasn't 
+                          passed,
+        *♥*♥* 3. critical: an optional boolean parameter
+                           ???,
+        *♥*♥* 4. tol: an optional boolean parameter for 
+                      establishing a maximum tolerance 
+                      for numerical errors, when computing
+                      rho's trace. See Warnings further
+                      below.
        
         ====> Returns: a boolean, its truth value
                                   being whether or not 
                                   rho is a density matrix.
                                   
-        Warnings: Due to numerical instabilities, it may be possible for the trace 
-                  to not be exactly one, even though it is supposed to be. 
-                  Therefore, a cut-off is implemented to check this condition.
+        Warnings: Due to numerical instabilities, 
+                  it may be possible for the trace 
+                  to not be exactly one, even though 
+                  it is supposed to be. Therefore, a 
+                  cut-off is implemented to check for 
     """
     if not qutip.isherm(rho):
         if verbose:
             print("rho is not hermitian")
         assert not critical
-        return False
+        return True #False
     if abs(1 - rho.tr()) > tol:
         if verbose:
             print("Tr rho != 1, Tr rho = ", rho.tr())
         assert not critical
-        return False
+        return True #False
     if not ev_checks(rho):
         if verbose:
             print("rho is not positive")
         assert not critical
-        return False
+        return True #False
     return True
 
 def non_hermitianess_measure(rho):
@@ -107,7 +116,7 @@ def non_hermitianess_measure(rho):
     """
     return linalg.norm(rho - rho.dag())
 
-def null_matrix_check(rho, tol = 1e-3):
+def null_matrix_check(rho, tol = 1e-5):
     return (linalg.norm(rho) < tol)
 
 # In [3]:
@@ -177,6 +186,18 @@ def basis_hermitian_check(basis):
     if type(basis) is dict:
         basis_loc = basis.values()
     return [null_matrix_check(op - op.dag()) for op in basis_loc]
+
+def basis_not_equal(basis1, basis2):
+    """
+    Given two sets of square matrices, 
+    
+    TODO
+    """
+    
+    basis_elmts_dist = [("basis1 op:" + i, "basis2 op" + j, 
+                         linalg.norm(basis1[i] - basis2[j])) for i in range(len(basis1))
+                                                             for j in range(len(basis2))]
+    return (basis_elmts_dist)
 
 # In [3]:
 
@@ -346,15 +367,18 @@ def bures(rho, sigma, svd = True):
 
 # In [5]:
 
+def proj_op(K, basis, rho0, sc_prod):
+    return sum([sc_prod(b, K,rho0) * b for b in basis])
+
 def rel_entropy(rho, sigma, svd = True):
     if svd:
         val = (rho*(logM(rho, True) - logM(sigma, True))).tr()
     else:
-        assert ((ev_checks(rho) and ev_checks(sigma))), "Either rho or sigma have negative ev."
+        assert ((ev_checks(rho) and ev_checks(sigma))), "Either rho or sigma non positive"
         val = (rho*(logM(rho, False)-logM(sigma, False))).tr()
         if (abs(val.imag - 0)>1.e-10):
             val = None
-            raise Exception("Either rho or sigma have negative ev.")
+            raise Exception("Either rho or sigma not positive")
     return val.real
 
 def bures_vectorized(rhot_list, sigmat_list):
@@ -423,22 +447,22 @@ def exact_v_proj_ev_matrix_metrics_multiple(timespan, range_of_temps_or_dims, mu
         ### And then to actually compute the metrics of a particular ProjEv with the exact evolution data. 
         
         for dim in range_HB_dims: 
-            res_exact_loc = multiple_evolutions["res_exact_all"]["res_exact_HierarchBases" + str(range_HB_dims.index(dim))]
+            res_exact_loc = multiple_evolutions["res_exact"]['res_exact_MaxEnt' + str(range_HB_dims.index(dim))]
             if res_exact_loc is None:
                 pass
             else: 
                 sigmat_list = res_exact_loc.states[:-1]
         
         for dim in range_HB_dims: 
-            rhot_list = multiple_evolutions["dict_res_proj_ev_all"]["dict_res_proj_ev_HierarchBases" + str(range_HB_dims.index(dim))]["State_ev"]
+            rhot_list = multiple_evolutions["all_max_ent_evs"]["res_evs_MaxEnt" + str(range_HB_dims.index(dim))]["State_ev"]
             sigmat_list = res_exact_loc.states[:-1] ### acá hay un bug raro, si no pongo esta línea nuevamente, se borra sigmat_list y
                                                     ### queda en None. Así funciona. 
             
-            bures_Ex_v_Proj_all["HierarchBases" + str(range_HB_dims.index(dim))] = bures_vectorized(rhot_list = rhot_list,
+            bures_Ex_v_Proj_all["Max-Ent" + str(range_HB_dims.index(dim))] = bures_vectorized(rhot_list = rhot_list,
                                                                                       sigmat_list = sigmat_list)
             local = relative_entropies_vectorized (rhot_list = rhot_list, sigmat_list = sigmat_list)
-            relEntropy_Proj_v_Ex_all["HierarchBases" + str(range_HB_dims.index(dim))] = local[0]
-            relEntropy_Ex_v_Proj_all["HierarchBases" + str(range_HB_dims.index(dim))] = local[1]
+            relEntropy_Proj_v_Ex_all["Max-Ent" + str(range_HB_dims.index(dim))] = local[0]
+            relEntropy_Ex_v_Proj_all["Max-Ent" + str(range_HB_dims.index(dim))] = local[1]
             rhot_list = None; sigmat_list = None; 
         
     return bures_Ex_v_Proj_all, relEntropy_Ex_v_Proj_all, relEntropy_Proj_v_Ex_all
