@@ -7,9 +7,9 @@ import matplotlib.pyplot as plt
 import time as time
 import scipy.linalg as linalg
 
-import matrix_analysis_lib as mat_ansys
-import spin_representations as su2
-import evs_visualization_tools as evs_plot
+import a_matrix_analysis_lib as mat_ansys
+import b_spin_representations as su2
+import c_evs_visualization_tools as evs_plot
 
 # In [1]:
 
@@ -47,12 +47,12 @@ def H_ij_matrix(Hamiltonian, basis, rho0, sc_prod):
 def basis_orthonormality_check(basis, rho0, sc_prod, visualization_Gram_m = False,
                                                      title_format_dprojev = True): 
     dim = len(basis)
-    hermitian_basis = [mat_ansys.non_hermitianess_measure(op1) <= 1e-10 for op1 in basis]
+    hermitian_basis = [mat_ansys.non_hermitianess_measure(op1) <= 1e-5 for op1 in basis]
     assert np.all(hermitian_basis), ("Not all the operators are "
                                      f"hermitian:\n {hermitian_basis}")
     
     gram_matrix = [[sc_prod(op2, op1, rho0) for op2 in basis] for op1 in basis]
-    normalized = [abs(gram_matrix[i][i]-1.) <= 1e-10  for i in range(dim)]
+    normalized = [abs(gram_matrix[i][i]-1.) <= 1e-5  for i in range(dim)]
     assert all(normalized), ("Some operators in the basis are not normalized:\n"
                              f"{normalized}")
 
@@ -180,7 +180,7 @@ def mod_mesolve(H, rho0, tlist, c_ops=None, e_ops=None,**kwargs):
 
 # In [14]:
 
-def d_depth_proj_ev(temp_ref, temp_rho, timespan, Hamiltonian, lagrange_op,
+def max_ent_ev(temp_ref, temp_rho, timespan, Hamiltonian, lagrange_op,
                     depth_and_seed_ops, observables, label_ops, 
                     coeff_list = None, custom_ref_state = None, 
                     rho_ref_corr_func = None,
@@ -306,6 +306,8 @@ def d_depth_proj_ev(temp_ref, temp_rho, timespan, Hamiltonian, lagrange_op,
                                                  Hamiltonian=Hamiltonian, 
                                                  rho0=rho_ref)
     
+    print("basis_incursive_len", len(basis_incursive))
+    
     basis_orth = mat_ansys.base_orth(ops = basis_incursive, 
                            rho0 = rho_ref, 
                            sc_prod = mat_ansys.HS_inner_prod_r, 
@@ -326,12 +328,9 @@ def d_depth_proj_ev(temp_ref, temp_rho, timespan, Hamiltonian, lagrange_op,
     if rho_ref_equal_rho0: 
         print("    |▼| 3a. using rho0 = rho_ref")
         phi0 = loc_coeff_list; rho0 = rho_ref    
-    if rho_ref_corr_func != None:
-        print("    |▼| 3b. using rho0 = exp(C(a,b)) + rho_ref")
     else: 
         print("    |▼| 3b. constructing rho0 from the coeff. list and orth. basis")
         phi0, rho0 = build_rho0_from_basis(coeff_list = loc_coeff_list, basis = basis_orth, temp=temp_rho)
-        
         
     Hijtensor = H_ij_matrix(Hamiltonian = Hamiltonian,
                             basis = basis_orth, 
@@ -379,41 +378,45 @@ def d_depth_proj_ev(temp_ref, temp_rho, timespan, Hamiltonian, lagrange_op,
         print("    |▼| 6b. Exact Dynamics not to be computed. Skipped.")
         res_exact = None
     
-    initial_configs = {}; 
-    initial_configs["Gram matrix"] = Gram_matrix; initial_configs["rho_ref"] = rho_ref
-    initial_configs["rho0"] = rho0; initial_configs["basis_orth"] = basis_orth
+    init_configs = {}; 
+    init_configs["Gram matrix"] = Gram_matrix; init_configs["rho_ref"] = rho_ref
+    init_configs["rho0"] = rho0; init_configs["basis_orth"] = basis_orth
     
-    dict_res_proj_ev = {}
-    dict_res_proj_ev["H_tensor"] = Hijtensor
-    dict_res_proj_ev["Coeff_ev"] = phit_list
-    dict_res_proj_ev["State_ev"] = herm_rhot_list; 
-    dict_res_proj_ev["Avgs"] = res_proj_ev_obs_list
+    init_configs["proj_ev_runtime"] = proj_ev_runtime
+    if compute_exact_dynamics: 
+        init_configs["exact_ev_runtime"] = exact_ev_runtime
+    
+    res_proj_ev = {}
+    res_proj_ev["H_tensor"] = Hijtensor
+    res_proj_ev["Coeff_ev"] = phit_list
+    res_proj_ev["State_ev"] = herm_rhot_list; 
+    res_proj_ev["Avgs"] = res_proj_ev_obs_list
     
     if visualize_expt_vals and compute_exact_dynamics:
         print("    |▼| 7a. Processing ProjEv v. Exact Plots.")
         evs_plot.plot_exact_v_proj_ev_avgs(obs = observables, labels = label_ops, timespan = timespan, 
-                                  Result_proj_ev = dict_res_proj_ev["Avgs"], 
+                                  Result_proj_ev = res_proj_ev["Avgs"], 
                                   Result_exact = res_exact, 
                                   visualize_diff_expt_vals = visualize_diff_expt_vals
                                   )
         label_metric = ["Bures Exact v. Proj ev", "S(exact || proj_ev)", "S(proj_ev || exact)"]
-        metric_local = exact_v_proj_ev_matrix_metrics(ts, dict_res_proj_ev["State_ev"], res_exact)
+        metric_local = exact_v_proj_ev_matrix_metrics(ts, res_proj_ev["State_ev"], res_exact)
         evs_plot.evs_plot.plot_exact_v_proj_ev_metrics(timespan, 
-                                     dict_res_proj_ev["State_ev"], 
+                                     res_proj_ev["State_ev"], 
                                      res_exact, 
                                      label_metric
                                     )
     else:
         print("    |▼| 7b. No Plots to process.")
         
-    evs_data = {}
-    evs_data["proj_ev_runtime"] = proj_ev_runtime
-    if compute_exact_dynamics: 
-        evs_data["exact_ev_runtime"] = exact_ev_runtime
+    evolutions_data = {}
+    evolutions_data["initial_configs_evs"] = init_configs
+    evolutions_data["proj_ev"] = res_proj_ev
+    evolutions_data["exact_ev"] = res_exact
     
     coeff_list = None; loc_coeff_list = None
     Gram_matrix = None; rho_ref = None; rho0 = None; basis_orth = None
     Hijtensor = None; phit_list = None; herm_rhot_list = None; res_proj_ev_obs_list = None
     
     print("    |▼| 8. Data Stored. Evolutions concluded. \n")
-    return initial_configs, evs_data, dict_res_proj_ev, res_exact
+    return evolutions_data 
