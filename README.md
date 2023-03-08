@@ -78,18 +78,17 @@ Have Python 3 installed
    ```sh
    (NameOfVirtualEnv) pip3 install -r requirements.txt
    ```
-4. Now you are ready to use VANs!
+4. Now you are ready to run custom restricted Max-Ent evolutions!
   ```sh
   (NameOfVirtualEnv) python3 meta_main.py
 
 ## Usage:
 
-First and foremost, one must specificy the spin system. The code comes with a series of pre-defined Hamiltonians (e.g. XX, XY, XXX, etc.), for which one must only specify the relevant parameters. 
+First and foremost, one must characterize the spin system. The code comes with a series of pre-defined Hamiltonians (e.g. XX, XY, XXX, etc.), with or without closed boundary conditions, etc., for which one must only specify the relevant parameters. 
 
 Then, one must specify the desired $\ell$ dimensions, for which the restricted Max-Ent evolution on ${\cal V}^{\ell}$ is desired, alongside the chosen observables of interest, for which their time evolved expectation values are desired. 
 
 Optionally, one can also compute the exact evolution by invoking QuTiP's *mesolve* function, for easy comparison of the approximate and exact results. 
-
 Moreover, a series of <a href= https://github.com/licTomasPerez/Max-Ent_Dynamics/tree/main/Hierarchical_Basis_Codebase/Tutorials>tutorials</a> have been written in order to demonstrate how to carry out restricted Max-Ent evolutions for some simples quantum mechanical spin systems.
 
 ## Contributing
