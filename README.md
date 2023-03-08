@@ -1,9 +1,9 @@
-# Restricted Max-Ent Dynamics &middot; [![Build Status](https://img.shields.io/travis/npm/npm/latest.svg?style=flat-square)](https://github.com/licTomasPerez) [![npm](https://img.shields.io/npm/v/npm.svg?style=flat-square)](https://www.npmjs.com/package/npm) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/your/your-project/blob/master/LICENSE)
+# Gaussian-like Restricted Max-Ent Dynamics for Spin Systems &middot; [![Build Status](https://img.shields.io/travis/npm/npm/latest.svg?style=flat-square)](https://github.com/licTomasPerez) [![npm](https://img.shields.io/npm/v/npm.svg?style=flat-square)](https://www.npmjs.com/package/npm) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/your/your-project/blob/master/LICENSE)
 
 <br />
 <p align="center">
   
-  <h2> A Systematic Method for constructing Approximate Closed Quantum Dynamics for Interacting Spin Systems </h2>
+  <h2> A Systematic Method for simulating approximate closed Quantum Dynamics for Interacting Spin Systems </h2>
   <p align="center">
   </p>
 </p>
