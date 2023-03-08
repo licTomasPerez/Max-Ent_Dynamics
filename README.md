@@ -6,6 +6,7 @@
 
 <br />
 <p align="center">
+  <h1> Pérez, F. Tomás B. and J.M. Matera
   <h2> A Systematic Algorithm for the simulation of approximate closed Quantum Dynamics for Interacting Spin Systems </h2>
   <p align="center">
   </p>
