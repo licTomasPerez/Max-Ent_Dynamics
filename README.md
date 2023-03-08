@@ -43,11 +43,11 @@ These generalized Max-Ent states, then, contain some of the most relevant correl
 These ideas and methods will be used, in this repository, to simulate the dynamics of the Heisenberg-like XX and XY models. 
 
 <p align="center">
-<img src="figs_readme/Restricted_ME_algo.jpg" style="width:500px;height:500px;">
+<img src="figs_readme/Restricted_ME_algo.jpg" style="width:700px;height:500px;">
 </p>
 
 <p align="center">
-<img src="figs_readme/Comparing_Exact_vs_RME.jpg" style="width:500px;height:500px;">
+<img src="figs_readme/Comparing_Exact_vs_RME.jpg" style="width:700px;height:500px;">
 </p>
 
 ## Built with:
