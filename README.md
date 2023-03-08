@@ -49,7 +49,7 @@ These **restricted Max-Ent evolutions*, then, are much less computationally expe
 Moreover, even though the mapping is exact, we develop a systematic method of constructing approximations, which should in principle yield better and better results as the Hierarchical Bases augments. Next, we show a brief diagram comparing the steps and elements of an exact and a restricted Max-Ent evolution.
 
 <p align="center">
-<img src="figs_readme/Comparing_Exact_vs_RME.jpg" style="width:500px;height:500px;">
+<img src="figs_readme/Comparing_Exact_vs_RME.jpg" style="width:600px;height:400px;">
 </p>                                                                    
                                                          
 These ideas and methods will be used, in this repository, to simulate the dynamics of the Heisenberg-like XX and XY models, which will be treated in the <a href= https://github.com/licTomasPerez/Max-Ent_Dynamics/tree/main/Hierarchical_Basis_Codebase/Tutorials>tutorials</a> section. 
