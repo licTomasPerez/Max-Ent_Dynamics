@@ -52,10 +52,48 @@ These ideas and methods will be used, in this repository, to simulate the dynami
 
 ## Built with:
 
+This implementation has been written in Python 3, using several external and user-defined libraries, namely
+
+* [Quantum Toolbox in Python](https://qutip.org/qutip-tutorials/)
+* [NumPy](https://numpy.org/doc/)
+* [SciPy](https://docs.scipy.org/doc/scipy/index.html)
+
 ## Prerrequisites for use:
+
+Have Python 3 installed
+
+1. Clone the repo
+   ```sh 
+   git clone https://github.com/licTomasPerez/Max-Ent_Dynamics.git
+   ```
+2. Optional, but highly recommended. Create a virtual environment to avoid conflict with other dependencies
+  ```sh
+  python3 -m virtualenv {NameOfVirtualEnv}
+  ```
+  And activate the virtual environment
+  ```sh
+  source {NameOfVirtualEnv}/bin/activate.sh
+  ```
+3. Install libraries
+   ```sh
+   (NameOfVirtualEnv) pip3 install -r requirements.txt
+   ```
+4. Now you are ready to use VANs!
+  ```sh
+  (NameOfVirtualEnv) python3 meta_main.py
 
 ## Usage:
 
+First and foremost, one must specificy the spin system. The code comes with a series of pre-defined Hamiltonians (e.g. XX, XY, XXX, etc.), for which one must only specify the relevant parameters. 
+
+Then, one must specify the desired $\ell$ dimensions, for which the restricted Max-Ent evolution on ${\cal V}^{\ell}$ is desired, alongside the chosen observables of interest, for which their time evolved expectation values are desired. 
+
+Optionally, one can also compute the exact evolution by invoking QuTiP's *mesolve* function, for easy comparison of the approximate and exact results. 
+
+Moreover, a series of <a href= https://github.com/licTomasPerez/Max-Ent_Dynamics/tree/main/Hierarchical_Basis_Codebase/Tutorials>tutorials</a> have been written in order to demonstrate how to carry out restricted Max-Ent evolutions for some simples quantum mechanical spin systems.
+
 ## Contributing
+
+Contributions are open! Feel free to contact me via my socials. 
 
 ## Specifications
