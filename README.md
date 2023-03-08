@@ -1,4 +1,4 @@
-# Restricted Max-Ent Dynamics: &middot; [![Build Status](https://img.shields.io/travis/npm/npm/latest.svg?style=flat-square)](https://github.com/licTomasPerez) [![npm](https://img.shields.io/npm/v/npm.svg?style=flat-square)](https://www.npmjs.com/package/npm) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/your/your-project/blob/master/LICENSE)
+# Restricted Max-Ent Dynamics &middot; [![Build Status](https://img.shields.io/travis/npm/npm/latest.svg?style=flat-square)](https://github.com/licTomasPerez) [![npm](https://img.shields.io/npm/v/npm.svg?style=flat-square)](https://www.npmjs.com/package/npm) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/your/your-project/blob/master/LICENSE)
 
 <br />
 <p align="center">
@@ -41,6 +41,14 @@ We circumvent this dramatic overhead in computational resources by noting that n
 These generalized Max-Ent states, then, contain some of the most relevant correlations present in the system. 
 
 These ideas and methods will be used, in this repository, to simulate the dynamics of the Heisenberg-like XX and XY models. 
+
+<p align="center">
+<img src="figs_readme/Restricted_ME_algo.jpg" style="width:500px;height:500px;">
+</p>
+
+<p align="center">
+<img src="figs_readme/Comparing_Exact_vs_RME.jpg" style="width:500px;height:500px;">
+</p>
 
 ## Built with:
 
