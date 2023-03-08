@@ -81,7 +81,8 @@ Have Python 3 installed
 4. Now you are ready to run custom restricted Max-Ent evolutions!
   ```sh
   (NameOfVirtualEnv) python3 meta_main.py
-
+  ```
+  
 ## Usage:
 
 First and foremost, one must characterize the spin system. The code comes with a series of pre-defined Hamiltonians (e.g. XX, XY, XXX, etc.), with or without closed boundary conditions, etc., for which one must only specify the relevant parameters. 
