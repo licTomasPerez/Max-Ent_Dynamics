@@ -1,8 +1,41 @@
-# Restricted Max-Ent Dynamics
+<br />
+<p align="center">
+
+  <h1 align="center"> Restricted Max-Ent Dynamics </h3>
+
+  <p align="center">
+  <h2>A semi-agnostic ansatz with variable structure for quantum machine learning </h2>
+
+  </p>
+</p>
+<p>
 
 ## A Systematic Method for constructing Approximate Closed Quantum Dynamics for Interacting Spin Systems. 
 
 Codebase and Documentation for the upcoming paper titled "Gaussian-like Max-Ent restricted Dynamics for Spin Systems"
+
+<!-- TABLE OF CONTENTS -->
+<details open="open">
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#overview">Overview</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+
+  </ol>
+</details>
 
 ## Overview:
 
