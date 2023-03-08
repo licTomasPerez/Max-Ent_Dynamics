@@ -46,18 +46,17 @@ We circumvent this dramatic overhead in computational resources by noting that n
 This notion of *Gaussianization* combined with the *Max-Ent principle*, thus, allows for an exact mapping of the Schr\"odinger equation on the density states $\rho$, which are ${\cal O}(\exp 2N)$ dimensional objects, to an equation of motion on the correlations themselves, which are simply continous functions. 
 These **restricted Max-Ent evolutions*, then, are much less computationally expensive than exact calculation of the system's dynamics.
 
-Moreover, even though the mapping is exact, we develop a systematic method of constructing approximations, which should in principle yield better and better results as the Hierarchical Bases augments. 
+Moreover, even though the mapping is exact, we develop a systematic method of constructing approximations, which should in principle yield better and better results as the Hierarchical Bases augments. Next, we show a brief diagram comparing the steps and elements of an exact and a restricted Max-Ent evolution.
 
 <p align="center">
-<img src="figs_readme/Comparing_Exact_vs_RME.jpg" style="width:300px;height:300px;">
+<img src="figs_readme/Comparing_Exact_vs_RME.jpg" style="width:500px;height:500px;">
 </p>                                                                    
                                                          
 These ideas and methods will be used, in this repository, to simulate the dynamics of the Heisenberg-like XX and XY models, which will be treated in the <a href= https://github.com/licTomasPerez/Max-Ent_Dynamics/tree/main/Hierarchical_Basis_Codebase/Tutorials>tutorials</a> section. 
 We include a short pseudo-code explanation of the main steps required for a restricted Max-Ent evolution. 
 
-
 <p align="center">
-<img src="figs_readme/Restricted_ME_algo.jpg" style="width:300px;height:300px;">
+<img src="figs_readme/Restricted_ME_algo.jpg" style="width:400px;height:400px;">
 </p>    
 
 ## Built with:
