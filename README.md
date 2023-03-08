@@ -49,7 +49,7 @@ These **restricted Max-Ent evolutions*, then, are much less computationally expe
 Moreover, even though the mapping is exact, we develop a systematic method of constructing approximations, which should in principle yield better and better results as the Hierarchical Bases augments. 
 
 <p align="center">
-<img src="figs_readme/Comparing_Exact_vs_RME.jpg", style="width:400px;height:500px;>
+<img src="figs_readme/Comparing_Exact_vs_RME.jpg" alt="Logo" style="width:400px;height:500px;>
 </p>
                                                           
                                                           
@@ -58,7 +58,7 @@ These ideas and methods will be used, in this repository, to simulate the dynami
 We include a short pseudo-code explanation of the main steps required for a restricted Max-Ent evolution. 
 
 <p align="center">
-<img src="figs_readme/Restricted_ME_algo.jpg", style="width:400px;height:500px;>
+<img src="figs_readme/Restricted_ME_algo.jpg" alt="Logo" style="width:400px;height:500px;>
 </p>
 
 ## Built with:
