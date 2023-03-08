@@ -2,7 +2,7 @@
 
 [![Build Status](https://img.shields.io/badge/build-v1.0.0-brightgreen)](https://github.com/licTomasPerez) 
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) 
-[![GitHub license](https://img.shields.io/badge/license-GPL%203--0-brightgreen)](https://github.com/your/your-project/blob/master/LICENSE)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue)](https://github.com/your/your-project/blob/master/LICENSE)
 
 <br />
 <p align="center">
