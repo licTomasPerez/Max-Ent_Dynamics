@@ -5,7 +5,7 @@
 <br />
 <p align="center">
   
-  <h2> A Systematic Method for simulating approximate closed Quantum Dynamics for Interacting Spin Systems </h2>
+  <h2> A Systematic Algorithm for the simulation of approximate closed Quantum Dynamics for Interacting Spin Systems </h2>
   <p align="center">
   </p>
 </p>
